@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta de Calificaciones</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      text-align: center;
+      padding: 50px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 70%;
+      background: white;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Consulta de Calificaciones</h1>
+<p>Ingrese su número de cédula:</p>
+
+<input type="text" id="cedulaInput" placeholder="Ej: 114870587">
+<button onclick="buscar()">Consultar</button>
+
+<div id="resultado"></div>
+
+<script>
+// DATOS REALES DEL EXCEL
+const estudiantes = [
+  {
+    cedula: "114870587",
+    nombre: "Yerany Vanessa Torres Torres",
+    materias: [
+      {nombre:"LECTURA", nota:5},
+      {nombre:"PRUEBA PARCIAL", nota:20},
+      {nombre:"ESTUDIO DE CASO", nota:10},
+      {nombre:"EXPOSICION", nota:10},
+      {nombre:"PRUEBA PARCIAL II", nota:20},
+      {nombre:"PROYECTO FINAL", nota:25},
+      {nombre:"WEBINAR", nota:3}
+    ],
+    promedio: 93
+  },
+  {
+    cedula: "115070711",
+    nombre: "Susan Andrea Espinoza Castro",
+    materias: [
+      {nombre:"LECTURA", nota:5},
+      {nombre:"PRUEBA PARCIAL", nota:20},
+      {nombre:"ESTUDIO DE CASO", nota:9.5},
+      {nombre:"EXPOSICION", nota:10},
+      {nombre:"PRUEBA PARCIAL II", nota:20},
+      {nombre:"PROYECTO FINAL", nota:25},
+      {nombre:"WEBINAR", nota:3}
+    ],
+    promedio: 92.5
+  }
+  // 👉 Aquí puedes seguir agregando automáticamente todos los estudiantes si quieres
+];
+
+function buscar() {
+  const cedula = document.getElementById("cedulaInput").value;
+  const estudiante = estudiantes.find(e => e.cedula === cedula);
+
+  const resultadoDiv = document.getElementById("resultado");
+  resultadoDiv.innerHTML = "";
+
+  if (estudiante) {
+    let html = `<h2>${estudiante.nombre}</h2>`;
+    html += `<table>
+              <tr>
+                <th>Actividad</th>
+                <th>Nota</th>
+              </tr>`;
+
+    estudiante.materias.forEach(m => {
+      html += `<tr>
+                <td>${m.nombre}</td>
+                <td>${m.nota}</td>
+              </tr>`;
+    });
+
+    html += `<tr>
+              <th>Promedio Final</th>
+              <th>${estudiante.promedio}</th>
+            </tr>`;
+
+    html += `</table>`;
+    resultadoDiv.innerHTML = html;
+  } else {
+    resultadoDiv.innerHTML = "<p>No se encontró la cédula.</p>";
+  }
+}
+</script>
+
+</body>
+</html>
